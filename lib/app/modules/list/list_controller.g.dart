@@ -32,21 +32,6 @@ mixin _$ListController on _ListControllerBase, Store {
     });
   }
 
-  final _$todoListAtom = Atom(name: '_ListControllerBase.todoList');
-
-  @override
-  List<String> get todoList {
-    _$todoListAtom.reportRead();
-    return super.todoList;
-  }
-
-  @override
-  set todoList(List<String> value) {
-    _$todoListAtom.reportWrite(value, super.todoList, () {
-      super.todoList = value;
-    });
-  }
-
   final _$_ListControllerBaseActionController =
       ActionController(name: '_ListControllerBase');
 
@@ -76,7 +61,6 @@ mixin _$ListController on _ListControllerBase, Store {
   String toString() {
     return '''
 newTodoTitle: ${newTodoTitle},
-todoList: ${todoList},
 isFormValid: ${isFormValid}
     ''';
   }

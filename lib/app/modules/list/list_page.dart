@@ -13,7 +13,7 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends ModularState<ListPage, ListController> {
-  //use 'controller' variable to access controller
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +32,11 @@ class _ListPageState extends ModularState<ListPage, ListController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      "Tarefas",
+                      "Minhas Tarefas",
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w900,
-                        fontSize: 30,
+                        fontSize: 26,
                       ),
                     ),
                     IconButton(
@@ -59,28 +59,48 @@ class _ListPageState extends ModularState<ListPage, ListController> {
                       children: <Widget>[
                         Observer(builder: (_) {
                           return CustomTextField(
-                            hint: "Tarefa",
+                            controller: _controller,
+                            hint: "Add Tarefa",
                             prefix: Icon(Icons.toc),
                             onChanged: controller.setNewTodoTitle,
                             sufix: controller.isFormValid
                                 ? IconButton(
                                     icon: Icon(Icons.add),
-                                    onPressed: controller.addTodo,
+                                    onPressed: () {
+                                      controller.addTodo();
+                                      _controller.clear();
+                                    },
                                   )
                                 : null,
                           );
                         }),
                         const SizedBox(height: 8),
                         Expanded(
-                          child: ListView.separated(
-                            itemBuilder: (_, index) {
-                              return ListTile(
-                                title: Text("Item $index"),
-                              );
-                            },
-                            separatorBuilder: (_, __) => Divider(),
-                            itemCount: 10,
-                          ),
+                          child: Observer(builder: (_) {
+                            return ListView.separated(
+                              itemCount: controller.todoList.length,
+                              itemBuilder: (_, index) {
+                                final todo = controller.todoList[index];
+                                return Observer(builder: (_) {
+                                  return ListTile(
+                                    title: Text(
+                                      todo.title,
+                                      style: TextStyle(
+                                        decoration: todo.done
+                                            ? TextDecoration.lineThrough
+                                            : null,
+                                        color: todo.done
+                                            ? Colors.grey
+                                            : Colors.black,
+                                      ),
+                                    ),
+                                    onTap: todo.toggleDone,
+                                  );
+                                });
+                              },
+                              separatorBuilder: (_, __) => Divider(),
+                            );
+                          }),
                         )
                       ],
                     ),
