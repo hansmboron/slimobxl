@@ -14,15 +14,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends ModularState<LoginPage, LoginController> {
-  @override
-  void didChangeDependencies() {
-    autorun((_) {
-      if (controller.loggedIn) {
-        Modular.to.pushNamed("/list");
-      }
-    });
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   autorun((_) {
+  //     if (controller.loggedIn) {
+  //       Modular.to.pushNamed("/list");
+  //     }
+  //   });
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {

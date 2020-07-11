@@ -92,21 +92,6 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
-  final _$loggedInAtom = Atom(name: '_LoginControllerBase.loggedIn');
-
-  @override
-  bool get loggedIn {
-    _$loggedInAtom.reportRead();
-    return super.loggedIn;
-  }
-
-  @override
-  set loggedIn(bool value) {
-    _$loggedInAtom.reportWrite(value, super.loggedIn, () {
-      super.loggedIn = value;
-    });
-  }
-
   final _$loginAsyncAction = AsyncAction('_LoginControllerBase.login');
 
   @override
@@ -151,13 +136,23 @@ mixin _$LoginController on _LoginControllerBase, Store {
   }
 
   @override
+  void logout() {
+    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
+        name: '_LoginControllerBase.logout');
+    try {
+      return super.logout();
+    } finally {
+      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 email: ${email},
 password: ${password},
 passwordVisible: ${passwordVisible},
 loading: ${loading},
-loggedIn: ${loggedIn},
 isEmailValid: ${isEmailValid},
 isPassValid: ${isPassValid},
 loginPressed: ${loginPressed}

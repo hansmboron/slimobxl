@@ -1,3 +1,4 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 
 part 'login_controller.g.dart';
@@ -24,9 +25,6 @@ abstract class _LoginControllerBase with Store {
   @observable
   bool loading = false;
 
-  @observable
-  bool loggedIn = false;
-
   @action
   void setEmail(String value) => email = value;
 
@@ -40,10 +38,17 @@ abstract class _LoginControllerBase with Store {
   Future<void> login() async {
     loading = true;
 
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 2));
 
     loading = false;
-    loggedIn = true;
+    Modular.to.pushReplacementNamed('/list');
+    email = '';
+    password = '';
+  }
+
+  @action
+  void logout() {
+    Modular.to.pushReplacementNamed('/');
   }
 
   @computed

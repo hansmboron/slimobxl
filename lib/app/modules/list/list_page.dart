@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:slimobxl/app/modules/login/login_controller.dart';
 import 'package:slimobxl/app/modules/login/widgets/custom-text-field.dart';
 import 'list_controller.dart';
 
@@ -14,6 +15,8 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends ModularState<ListPage, ListController> {
   final TextEditingController _controller = TextEditingController();
+
+  final LoginController _loginController = LoginController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,9 @@ class _ListPageState extends ModularState<ListPage, ListController> {
                     IconButton(
                       icon: Icon(Icons.exit_to_app),
                       color: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {
+                        _loginController.logout();
+                      },
                     ),
                   ],
                 ),
