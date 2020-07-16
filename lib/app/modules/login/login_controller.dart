@@ -62,4 +62,24 @@ abstract class _LoginControllerBase with Store {
   @computed
   Function get loginPressed =>
       (isEmailValid && isPassValid && !loading) ? login : null;
+
+  String validateEmail() {
+    if (email == "") {
+      return "";
+    } else if (!isEmailValid) {
+      return "Email Inválido";
+    } else {
+      return "";
+    }
+  }
+
+  String validatePass() {
+    if (password == "") {
+      return "";
+    } else if (!isPassValid) {
+      return "Senha Inválida";
+    } else {
+      return "";
+    }
+  }
 }
