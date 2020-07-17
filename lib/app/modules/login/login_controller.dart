@@ -57,7 +57,7 @@ abstract class _LoginControllerBase with Store {
       .hasMatch(email);
 
   @computed
-  bool get isPassValid => password.length >= 6;
+  bool get isPassValid => password.length >= 8;
 
   @computed
   Function get loginPressed =>
@@ -77,7 +77,13 @@ abstract class _LoginControllerBase with Store {
     if (password == "") {
       return "";
     } else if (!isPassValid) {
-      return "Senha Inválida";
+      if (!password.contains(RegExp(r'[0-9]'))) {
+        return "Recomenda-se utilizar números";
+      } else if (!password.contains(RegExp(r'[A-Z]'))) {
+        return "Recomenda-se utilizar letras MAIÚSCULAS";
+      } else {
+        return "Pelo menos 8 caracteres";
+      }
     } else {
       return "";
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:slimobxl/app/modules/login/widgets/buildBar.dart';
 import 'login_controller.dart';
 import 'widgets/custom-text-field.dart';
 
@@ -54,7 +55,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                   const SizedBox(height: 8),
                   Observer(builder: (_) {
                     return CustomTextField(
-                      hint: "Senha",
+                      hint: "Criar senha",
                       errorText: controller.validatePass(),
                       prefix: Icon(Icons.lock),
                       obscure: !controller.passwordVisible,
@@ -68,10 +69,26 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                       ),
                     );
                   }),
-                  const SizedBox(height: 12),
+                  Observer(builder: (_) {
+                    return Container(
+                      margin: const EdgeInsets.only(top: 2),
+                      height: 8,
+                      child: controller.password.isNotEmpty
+                          ? Row(
+                              children: <Widget>[
+                                builbar(0, controller.password),
+                                builbar(1, controller.password),
+                                builbar(2, controller.password),
+                                builbar(3, controller.password),
+                              ],
+                            )
+                          : Container(),
+                    );
+                  }),
+                  const SizedBox(height: 16),
                   Observer(builder: (_) {
                     return SizedBox(
-                      height: 50,
+                      height: 45,
                       // width: controller.loading ? 50 : null,
                       child: RaisedButton(
                         shape: RoundedRectangleBorder(
